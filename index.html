@@ -86,13 +86,18 @@
 								<a href="#contact" class="button style2 down anchored">Next</a>
 			</section>
 			
-		<!-- Contact -->
+			<!-- Contact -->
 			<section id="contact" class="main style3 secondary">
 				<div class="content container">
-					<header>
+					<header class="contact_header">
 						<h2>Contact Us</h2>
 						<p>Feel free to contact us with any questions or to be added to our email list.</p>
 					</header>
+
+					<!--THANK YOU COMMENT IS HERE BUT HIDDEN FOR SPACING, AJAX BRINGS IT BACK AFTER FORM SUBMITTED -->
+							<div id="thank" style="display:none"><h2>Thank you!</h2>
+							</div>	
+
 					<div class="boxC container small">
 					
 						<!--
@@ -102,10 +107,14 @@
 							 point the "action" attribute to it (eg. action="http://mydomain.tld/mail.php").
 							 More on how it all works here: http://www.1stwebdesigner.com/tutorials/custom-php-contact-forms/
 						-->
-							<form method="post" action="mail.php">
+							<!--<form method="post" action="mail.php">-->
+							<form id="contacts" method="post" role="form" action="">
 								<div class="row half">
-									<div class="6u"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u"><input type="text" name="email" placeholder="Email" /></div>
+									<div class="6u"><input type="text" name="name" placeholder="Name" required /></div>
+									<!-- added the required tag so they cant submit it unless there is something-->
+									<div class="6u"><input type="text" name="email" placeholder="Email" required /></div>
+									<!-- added the required tag so they cant submit it unless there is something-->
+									<!-- change type to email and then style the same way so it has to have an @ sign to get through-->
 								</div>
 								<div class="row half">
 									<div class="12u"><textarea name="message" placeholder="Message" rows="6"></textarea></div>
@@ -119,10 +128,32 @@
 								</div>
 							</form>
 
+<!-- THIS IS THE NICE ANIMATION FOR THE CONTACT FORM #AJAX -->
+
+
+							<script>
+								$("#contacts").submit(function() {
+								    $.ajax({
+								          type: "POST",
+								          url: "mail.php",
+								          data: $("#contact").serialize(), 
+								          success: function(data)
+								          {
+								              $('#contacts').hide("slow");
+								              $('.col-sm-4').hide("slow");
+								              $('.contact_header').hide("slow");
+								              $('#thank').show("slow");
+								          }
+								        });
+
+								    return false; 
+								});
+								</script>
+
 					</div>
 				</div>
 			</section>
-									
+												
 		<!-- Footer -->
 			<footer id="footer">
 			
